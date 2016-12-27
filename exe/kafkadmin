@@ -1,0 +1,74 @@
+#! /usr/bin/env ruby
+
+require 'pathname'
+require 'byebug'
+
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'kafkadmin'
+require 'optparse'
+
+banner = 'Kafkadmin: Administrative API for your Kafka brokers'
+
+options = {}
+global = OptionParser.new do |opts|
+  opts.banner = banner
+  opts.separator ''
+  opts.separator 'Usage:'
+  opts.separator '  kafkadmin [COMMAND] [OPTIONS]'
+  opts.separator ''
+  opts.separator 'Available commands:'  
+  opts.separator '  start [OPTIONS]        Starts the Kafkadmin server'
+  opts.separator '  stop [OPTIONS]         Stops the Kafkadmin server (if running as a daemon)'
+  opts.separator ''
+  opts.separator 'Run any of the above commands with --help for further options.'
+end
+
+subcommands = {
+  'start' => OptionParser.new do |opts|
+    opts.banner = banner
+    opts.separator ''
+    opts.separator 'Command: START'
+    opts.separator 'Starts the Kafkadmin server.'
+    opts.separator ''
+    opts.separator 'Options:'
+
+    opts.on('-d', '--daemon', 'Run Kafkadmin in the background') do |v|
+      options[:daemon] = !v.nil?
+    end
+  end,
+  'stop' => OptionParser.new do |opts|
+    opts.banner = banner
+    opts.separator ''
+    opts.separator 'Command: STOP'
+    opts.separator 'Stops the Kafkadmin server.'
+    opts.separator ''
+    opts.separator 'Options:'
+
+    opts.on('-q', '--[no-]quiet', 'quietly run ') do |v|
+      options[:quiet] = v
+    end
+  end
+}
+
+command = ARGV[0]
+
+if !['start', 'stop', '--help', '-h'].include? command
+  puts "Unkown command #{command}"
+  puts "See --help for available commands."
+  abort
+end
+
+begin
+  global.order!
+  subcommands[ARGV.shift].order!
+rescue OptionParser::InvalidOption => e
+  puts "Error parsing options for command #{command}:"
+  puts "  #{e.message}"
+  puts ""
+  puts "See --help for available options for #{command}."
+  abort
+end
+
+Kafkadmin.configure!(options)
