@@ -3,11 +3,13 @@ module Kafkadmin
   class Config
 
     AVAILABLE_CONFIGS = [
-      :daemon
+      :daemon,
+      :kafka_path
     ]
 
     DEFAULTS = {
-      :daemon => false
+      :daemon => false,
+      :kafka_path => '/opt/kafka'
     }
 
     def initialize(opts = {})
@@ -18,12 +20,8 @@ module Kafkadmin
       end
     end
 
-    def [](key)
-      @configs[key]
-    end
-
     def fetch(key)
-      @configs.fetch(key)
+      @configs.fetch(key) { raise("Requested invalid config option #{key}") }
     end
 
     def values

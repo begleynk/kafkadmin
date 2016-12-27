@@ -2,6 +2,8 @@
 
 A small web API to be run on Kafka brokers that provides administration commands, by allowing access to Kafka's own binaries.
 
+The purpose of this API is to support some actions that are currently not available in many open source client libraries. Eventually, hopefully, it should become irrelevant.
+
 ## Installation
 
 ```ruby
@@ -16,9 +18,16 @@ Or install it yourself as:
 
     $ gem install kafkadmin
 
-## Usage
+## Supported Actions
 
-TODO: Write usage instructions here
+### Create a topic
+
+    POST /topics
+    {
+      "name": "foo",
+      "partitions" 5,
+      "replication_factor": 1
+    }
 
 ## Development
 
@@ -29,7 +38,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/begleynk/kafkadmin. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
-
 
 ## License
 

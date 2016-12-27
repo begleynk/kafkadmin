@@ -1,7 +1,6 @@
 #! /usr/bin/env ruby
 
 require 'pathname'
-require 'byebug'
 
 lib = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
@@ -72,3 +71,8 @@ rescue OptionParser::InvalidOption => e
 end
 
 Kafkadmin.configure!(options)
+
+case command
+when 'start'
+  Kafkadmin.start_server!
+end
