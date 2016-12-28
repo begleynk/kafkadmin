@@ -1,6 +1,7 @@
 require 'sinatra'
 require "kafkadmin/version"
 require "kafkadmin/config"
+require "kafkadmin/command_runner"
 require "kafkadmin/command"
 require "kafkadmin/web"
 

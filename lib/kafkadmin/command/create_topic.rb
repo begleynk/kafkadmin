@@ -49,13 +49,19 @@ module Kafkadmin
       def validate(arg)
         case arg
         when :topic_name
-          if @topic_name =~ /[a-zA-Z0-9\._\-]/
+          # This check cleans up our "controller" - validation happens inside
+          # the command.
+          if @topic_name.nil? || @topic_name.empty?
+            @errors << "Topic name must be provided."
+          elsif @topic_name =~ /^[a-zA-Z0-9\._\-]+$/
             true
           else
             @errors << "The name \"#{@topic_name}\" is not a valid Kafka topic name."
           end
         when :partitions
-          if @partitions > 0
+          if @partitions.nil? || (@partitions == '')
+            @errors << "Partition count must be provided."
+          elsif @partitions.to_i > 0
             true
           else
             @errors << "Partition count must be greater than 0. Got #{@partitions}."

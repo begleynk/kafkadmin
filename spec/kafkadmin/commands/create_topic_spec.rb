@@ -56,6 +56,36 @@ describe Kafkadmin::Command::CreateTopic do
     expect(command.errors).to eq [
       "Partition count must be greater than 0. Got -1."
     ]
+
+    command = Kafkadmin::Command::CreateTopic.new({
+      name: "asdf"
+    })
+
+    expect(command.valid?).to eq false
+    expect(command.errors).to eq [
+      "Partition count must be provided."
+    ]
+  end
+
+  it 'must be given a name' do
+    command = Kafkadmin::Command::CreateTopic.new({
+      partitions: 5
+    })
+
+    expect(command.valid?).to eq false
+    expect(command.errors).to eq [
+      "Topic name must be provided."
+    ]
+
+    command = Kafkadmin::Command::CreateTopic.new({
+      topic_name: '',
+      partitions: 5
+    })
+
+    expect(command.valid?).to eq false
+    expect(command.errors).to eq [
+      "Topic name must be provided."
+    ]
   end
 
   it 'raises an error if you ask for a command string when the command is invalid' do
