@@ -1,6 +1,9 @@
+require 'yaml'
 
 module Kafkadmin
   class Config
+
+    CONFIG_FILE_PATH = Dir.home + '/.kafkadmin'
 
     AVAILABLE_CONFIGS = [
       :daemon,
@@ -13,11 +16,11 @@ module Kafkadmin
     }
 
     def initialize(opts = {})
-      @configs = AVAILABLE_CONFIGS.dup.reduce(Hash.new) do |values, config_option|
-        # Use the provided option and fall back to defaults
-        values[config_option] = opts.fetch(config_option) { DEFAULTS[config_option] }
-        values
-      end
+      # Each step here overrides the config values
+      # set in the previous step.
+      load_default_configs
+      load_config_file
+      load_provided_config(opts)
     end
 
     def fetch(key)
@@ -26,6 +29,34 @@ module Kafkadmin
 
     def values
       @configs
+    end
+
+    private
+
+    def load_default_configs
+      @configs = DEFAULTS.dup
+    end
+
+    def load_config_file
+      if File.exists?(CONFIG_FILE_PATH)
+        file_values = YAML.load_file(CONFIG_FILE_PATH)
+        # File overrides
+        @configs = @configs.merge(extract_values(file_values))
+      else
+        # TODO: Tell the user the config file could not be
+        # found via a logger
+      end
+    end
+
+    def load_provided_config(opts)
+      @configs = @configs.merge(extract_values(opts))
+    end
+
+    # Only take out values that are valid config keys
+    def extract_values(opts_hash)
+      # Turns string keys into symbols just in case
+      opts_hash = opts_hash.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+      opts_hash.dup.delete_if {|key, _val| !AVAILABLE_CONFIGS.include?(key) }
     end
   end
 end

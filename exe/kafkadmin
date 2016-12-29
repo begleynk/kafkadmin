@@ -33,8 +33,9 @@ subcommands = {
     opts.separator ''
     opts.separator 'Options:'
 
-    opts.on('-d', '--daemon', 'Run Kafkadmin in the background') do |v|
-      options[:daemon] = !v.nil?
+    opts.on('--[no-]daemon', 'Run Kafkadmin in the background') do |v|
+      puts v.inspect
+      options[:daemon] = v
     end
   end,
   'stop' => OptionParser.new do |opts|
