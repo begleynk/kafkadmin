@@ -34,7 +34,6 @@ subcommands = {
     opts.separator 'Options:'
 
     opts.on('--[no-]daemon', 'Run Kafkadmin in the background') do |v|
-      puts v.inspect
       options[:daemon] = v
     end
   end,

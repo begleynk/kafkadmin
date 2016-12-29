@@ -39,7 +39,10 @@ module Kafkadmin
 
     def load_config_file
       if File.exists?(CONFIG_FILE_PATH)
-        file_values = YAML.load_file(CONFIG_FILE_PATH)
+        file_values = YAML.load(File.read(CONFIG_FILE_PATH))
+        if file_values.is_a? String
+          abort "Config file at #{CONFIG_FILE_PATH} is invalid. Expected YAML, got: \n#{file_values}"
+        end
         # File overrides
         @configs = @configs.merge(extract_values(file_values))
       else
