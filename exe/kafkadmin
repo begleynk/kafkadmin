@@ -75,4 +75,9 @@ Kafkadmin.configure!(options)
 case command
 when 'start'
   Kafkadmin.start_server!
+when 'stop'
+  Kafkadmin.stop_server!
+else
+  # This should not happen. You broke it.
+  raise 'Unknown command'
 end
