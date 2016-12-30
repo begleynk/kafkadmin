@@ -1,3 +1,4 @@
+require 'thin'
 require 'sinatra'
 require "kafkadmin/version"
 require "kafkadmin/config"

@@ -4,6 +4,10 @@ require 'kafkadmin/web/create_topic_action'
 module Kafkadmin
   class Web < Sinatra::Base
 
+    configure :production, :development do
+      enable :logging
+    end
+
     get '/healthcheck' do
       status 200
       content_type 'application/json'
