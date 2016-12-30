@@ -72,7 +72,7 @@ module Kafkadmin
       end
 
       def command_binary
-        "/opt/kafka/bin/kafka-topics.sh"
+        "#{Kafkadmin.config.fetch(:kafka_path)}/bin/kafka-topics.sh"
       end
 
       def main_command

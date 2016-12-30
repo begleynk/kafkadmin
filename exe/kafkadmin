@@ -17,7 +17,7 @@ global = OptionParser.new do |opts|
   opts.separator 'Usage:'
   opts.separator '  kafkadmin [COMMAND] [OPTIONS]'
   opts.separator ''
-  opts.separator 'Available commands:'  
+  opts.separator 'Available commands:'
   opts.separator '  start [OPTIONS]        Starts the Kafkadmin server'
   opts.separator '  stop [OPTIONS]         Stops the Kafkadmin server (if running as a daemon)'
   opts.separator ''
