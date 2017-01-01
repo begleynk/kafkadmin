@@ -79,7 +79,67 @@ describe Kafkadmin::Web do
 
       # Make the request
       post '/topics', args
-      File.write('./spec/last_response.html', last_response.body)
+
+      # Check the reponse
+      expect(last_response.status).to eq 422
+      expect(JSON.load(last_response.body)).to eq({
+        'status'      => 'error',
+        'message'     => 'Kafka returned a non-zero exit status.',
+        'command'     => {
+          'command_string' => cmd_string,
+          'exit_status' => 1,
+          'stdout' => 'foo',
+          'stderr' => 'bar'
+        }
+      })
+    end
+  end
+
+  context 'DELETE /topics/name' do
+    it 'creates a new topic' do
+      name = 'foo'
+      # The command we expect to get build
+      cmd_string = Kafkadmin::Command::DeleteTopic.new(name: name).command_string
+
+      # Check the command is executed
+      expect(Kafkadmin::CommandRunner).to(
+        receive(:execute)
+        .with(cmd_string)
+        .and_return(execution_result(cmd_string, 0, 'foo', 'bar'))
+      )
+
+      # Make the request (foo is topic name)
+      delete '/topics/' + name
+
+      # Check the reponse
+      expect(last_response.status).to eq 200
+      expect(JSON.load(last_response.body)).to eq({
+        'status'      => 'ok',
+        'command'     => {
+          'command_string' => cmd_string,
+          'exit_status' => 0,
+          'stdout' => 'foo',
+          'stderr' => 'bar'
+        }
+      })
+    end
+
+    it 'returns an error if the command failed to execute' do
+      name = 'bar'
+
+      # The command we expect to get build
+      cmd_string = Kafkadmin::Command::DeleteTopic.new(name: name).command_string
+
+      # Check the command is executed
+      expect(Kafkadmin::CommandRunner).to(
+        receive(:execute)
+        .with(cmd_string)
+        .and_return(execution_result(cmd_string, 1, 'foo', 'bar'))
+        # But return a bad result!
+      )
+
+      # Make the request
+      delete '/topics/' + name
 
       # Check the reponse
       expect(last_response.status).to eq 422
