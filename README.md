@@ -4,6 +4,9 @@ A small web API to be run on Kafka brokers that provides administration commands
 
 The purpose of this API is to support some actions that are currently not available in many open source client libraries. Eventually, hopefully, it should become irrelevant.
 
+*NOTE*
+This is by no means production ready. There are definitely security vulnerabilities and a plethora of unsupported features.
+
 ## Installation
 
 ```ruby
@@ -18,6 +21,31 @@ Or install it yourself as:
 
     $ gem install kafkadmin
 
+## Running the server
+
+To start up Kafkadmin
+
+    $ kafkadmin start --help        # See all available options
+    $ kafkadmin start [options]
+
+If you want to run Kafkadmin as a daemon,
+
+    $ kafkadmin start --daemon
+
+To kill the daemonized server,
+
+    $ kafkadmin stop
+
+## Configuration
+
+You can pass configuration options to Kafkadmin in two ways: via the command line when starting the server, or through a ~/.kafkadmin file. The CLI options will override your ~/.kafkadmin options.
+
+### Example ~/.kafkadmin
+
+  daemon: false
+  kafka_path: /opt/kafka
+  log_dir: /var/log/kafkadmin
+
 ## Supported Actions
 
 ### Create a topic
@@ -28,6 +56,10 @@ Or install it yourself as:
       "partitions" 5,
       "replication_factor": 1
     }
+
+### Delete a topic
+
+    DELETE /topics/*topic_name*
 
 ## Development
 
