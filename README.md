@@ -38,13 +38,13 @@ To kill the daemonized server,
 
 ## Configuration
 
-You can pass configuration options to Kafkadmin in two ways: via the command line when starting the server, or through a ~/.kafkadmin file. The CLI options will override your ~/.kafkadmin options.
+You can pass configuration options to Kafkadmin in two ways: via the command line when starting the server, or through a ~/.kafkadmin YAML file. The CLI options will override your ~/.kafkadmin options.
 
 ### Example ~/.kafkadmin
 
-  daemon: false
-  kafka_path: /opt/kafka
-  log_dir: /var/log/kafkadmin
+    daemon: false
+    kafka_path: /opt/kafka
+    log_dir: /var/log/kafkadmin
 
 ## Supported Actions
 
