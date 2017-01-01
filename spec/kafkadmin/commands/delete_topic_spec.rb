@@ -10,7 +10,7 @@ describe Kafkadmin::Command::DeleteTopic do
     expect(command.command_string).to eq(
       "/opt/kafka/bin/kafka-topics.sh " +
       "--delete " +
-      "--zookeeper 192.168.35.10 " +
+      "--zookeeper 192.168.35.10:2181 " +
       "--topic foo"
     )
   end

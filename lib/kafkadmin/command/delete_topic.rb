@@ -49,7 +49,7 @@ module Kafkadmin
       end
 
       def zookeeper
-        "--zookeeper 192.168.35.10"
+        "--zookeeper #{Kafkadmin.config.fetch(:zookeeper_string)}"
       end
 
       def topic_name

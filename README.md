@@ -45,6 +45,7 @@ You can pass configuration options to Kafkadmin in two ways: via the command lin
     daemon: false
     kafka_path: /opt/kafka
     log_dir: /var/log/kafkadmin
+    zookeeper_string: "192.168.35.10:2181"
 
 ## Supported Actions
 

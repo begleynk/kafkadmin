@@ -8,13 +8,15 @@ module Kafkadmin
     AVAILABLE_CONFIGS = [
       :daemon,
       :kafka_path,
-      :log_dir
+      :log_dir,
+      :zookeeper_string
     ]
 
     DEFAULTS = {
       :daemon     => false,
       :kafka_path => '/opt/kafka',
-      :log_dir    => './logs'
+      :log_dir    => './logs',
+      :zookeeper_string => '192.168.35.10:2181'
     }
 
     def initialize(opts = {})

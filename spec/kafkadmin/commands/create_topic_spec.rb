@@ -12,7 +12,7 @@ describe Kafkadmin::Command::CreateTopic do
     expect(command.command_string).to eq(
       "/opt/kafka/bin/kafka-topics.sh " +
       "--create " +
-      "--zookeeper 192.168.35.10 " +
+      "--zookeeper 192.168.35.10:2181 " +
       "--replication-factor 2 " +
       "--partitions 3 " +
       "--topic foo"
@@ -28,7 +28,7 @@ describe Kafkadmin::Command::CreateTopic do
     expect(command.command_string).to eq(
       "/opt/kafka/bin/kafka-topics.sh " +
       "--create " +
-      "--zookeeper 192.168.35.10 " +
+      "--zookeeper 192.168.35.10:2181 " +
       "--partitions 5 " +
       "--topic bar"
     )
