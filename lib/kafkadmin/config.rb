@@ -7,12 +7,14 @@ module Kafkadmin
 
     AVAILABLE_CONFIGS = [
       :daemon,
-      :kafka_path
+      :kafka_path,
+      :log_dir
     ]
 
     DEFAULTS = {
-      :daemon => false,
-      :kafka_path => '/opt/kafka'
+      :daemon     => false,
+      :kafka_path => '/opt/kafka',
+      :log_dir    => './logs'
     }
 
     def initialize(opts = {})

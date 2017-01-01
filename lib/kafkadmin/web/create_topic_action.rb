@@ -2,6 +2,8 @@
 module Kafkadmin
   class Web < Sinatra::Base
     class CreateTopicAction
+      include SemanticLogger::Loggable
+
 
       def initialize(args)
         @args = args
@@ -17,6 +19,7 @@ module Kafkadmin
 
           # If it succeeded, awesome
           if result.success?
+            logger.info "Successfully created topic", command: cmd.command_string
             @response = successful_response(result)
             @success = true
           else
@@ -25,6 +28,7 @@ module Kafkadmin
             @success = false
           end
         else
+          logger.error "Invalid command processed", errors: cmd.errors
           # If the original command was invalid, give a
           # different error
           @response = invalid_command_response(cmd)

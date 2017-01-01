@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'sinatra', '~> 1.4', '>= 1.4.7'
   spec.add_runtime_dependency 'thin', '~> 1.6', '>= 1.6.4'
+  spec.add_runtime_dependency 'semantic_logger', '~> 3.4'
 
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"

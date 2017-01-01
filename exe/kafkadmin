@@ -1,7 +1,5 @@
 #! /usr/bin/env ruby
 
-require 'pathname'
-
 lib = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
@@ -71,6 +69,7 @@ rescue OptionParser::InvalidOption => e
 end
 
 Kafkadmin.configure!(options)
+Kafkadmin::LoggerInitializer.init!
 
 case command
 when 'start'

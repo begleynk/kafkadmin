@@ -4,15 +4,16 @@ require 'kafkadmin/web/create_topic_action'
 module Kafkadmin
   class Web < Sinatra::Base
 
-    configure :production, :development do
+    configure do
       enable :logging
+      use Rack::CommonLogger, SemanticLogger[Web]
     end
 
     get '/healthcheck' do
       status 200
       content_type 'application/json'
 
-      '{ "status": "ok" }'
+      { status: 'ok' }.to_json
     end
 
     post '/topics' do

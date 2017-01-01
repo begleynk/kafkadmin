@@ -1,7 +1,9 @@
+require 'semantic_logger'
 require 'thin'
 require 'sinatra'
 require "kafkadmin/version"
 require "kafkadmin/config"
+require "kafkadmin/logger_initializer"
 require "kafkadmin/command_runner"
 require "kafkadmin/command"
 require "kafkadmin/web"
