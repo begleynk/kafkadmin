@@ -34,18 +34,24 @@ subcommands = {
     opts.on('--[no-]daemon', 'Run Kafkadmin in the background') do |v|
       options[:daemon] = v
     end
+
+    opts.on('--kafka-path [PATH]', 'Kafka installation directory path') do |path|
+      options[:kafka_path] = path
+    end
+
+    opts.on('--log-dir [PATH]', 'Location of Kafkadmin logs') do |path|
+      options[:log_dir] = path
+    end
+
+    opts.on('--zookeeper [STRING]', 'Zookeeper connection string') do |string|
+      options[:zookeeper_string] = string
+    end
   end,
   'stop' => OptionParser.new do |opts|
     opts.banner = banner
     opts.separator ''
     opts.separator 'Command: STOP'
     opts.separator 'Stops the Kafkadmin server.'
-    opts.separator ''
-    opts.separator 'Options:'
-
-    opts.on('-q', '--[no-]quiet', 'quietly run ') do |v|
-      options[:quiet] = v
-    end
   end
 }
 
