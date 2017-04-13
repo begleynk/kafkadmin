@@ -5,7 +5,7 @@ A small web API to be run on Kafka brokers that provides administration commands
 The purpose of this API is to support some actions that are currently not available in many open source client libraries. Eventually, hopefully, it should become irrelevant.
 
 *NOTE*
-This is by no means production ready. There are definitely security vulnerabilities and a plethora of unsupported features.
+This is by no means production ready. This was a fun little side side side project that is not maintained.
 
 ## Installation
 
